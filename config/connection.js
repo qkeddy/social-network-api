@@ -1,4 +1,3 @@
-
 // Require supporting NPM modules
 const mongoose = require('mongoose');
 
