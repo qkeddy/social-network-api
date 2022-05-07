@@ -1,18 +1,26 @@
-// Require supporting NPM modules
-const mongoose = require('mongoose');
+// Plucking off `Schema` constructor and `model` method
+const { Schema, model } = require('mongoose');
 
-// Initialize object to connect to model
-const userSchema = new mongoose.Schema({
+// Schema to create `User` model
+const userSchema = new Schema({
     username: { type: String, required: true, unique: true, trim: true },
     //TODO - Add matching validation
     email: { type: String, required: true, unique: true },
-    thoughts: { type: Array }  //We will learn more about this
+    // thoughts: { type: Array }  //We will learn more about this
+    thoughts: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'thought'
+        }
+    ]
     // TODO - Add thoughts ID
     // TODO - Add friends ID
 });
 
-const User = mongoose.model('User', userSchema);
+// Initialize the `User` model
+const User = model('user', userSchema);
 
+// Initialize function for error handling for seedings
 const handleError = (err) => console.error(err);
 
 // Will add data only if collection is empty to prevent duplicates
