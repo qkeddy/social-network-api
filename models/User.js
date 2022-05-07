@@ -6,7 +6,7 @@ const userSchema = new mongoose.Schema({
     username: { type: String, required: true, unique: true, trim: true },
     //TODO - Add matching validation
     email: { type: String, required: true, unique: true },
-    thoughts: { type: Array }
+    thoughts: { type: Array }  //We will learn more about this
     // TODO - Add thoughts ID
     // TODO - Add friends ID
 });

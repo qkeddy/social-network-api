@@ -1,7 +1,7 @@
 // Initialize Express.js router object
 const router = require('express').Router();
 
-// Initialize route to home path (./) 
+// Initialize route to home path (./)
 // const homeRoutes = require('./homeRoutes');  // Uncomment when required
 
 // Initialize route to API path (./api/index.js)

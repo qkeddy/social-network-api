@@ -2,7 +2,7 @@
 const express = require('express');
 
 // Initialize required variables
-const routes = require('./controllers');
+const routes = require('./routes');
 const db = require('./config/connection');
 
 // Initialize the Express.js server
