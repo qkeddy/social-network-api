@@ -1,7 +1,7 @@
 // Initialize Express.js router object
 const router = require('express').Router();
 
-// Add methods from userController
+// Add destructured methods from userController
 const { getUsers } = require('../../controllers/userController');
 
 // GET a user
