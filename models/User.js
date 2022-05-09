@@ -6,14 +6,13 @@ const userSchema = new Schema({
     username: { type: String, required: true, unique: true, trim: true },
     //TODO - Add matching validation
     email: { type: String, required: true, unique: true },
-    // thoughts: { type: Array }  //We will learn more about this
     thoughts: [
         {
             type: Schema.Types.ObjectId,
             ref: 'thought'
         }
     ]
-    // TODO - Add thoughts ID
+
     // TODO - Add friends ID
 });
 
