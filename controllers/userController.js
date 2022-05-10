@@ -23,28 +23,50 @@ const createUser = async (req, res) => {
     }
 };
 
-// Get a user using model in route 
+// Get a user using model in route
 const getUser = async (req, res) => {
     try {
-        const result = await User.findOne({ _id: req.params.userId }).select(
+        const user = await User.findOne({ _id: req.params.userId }).select(
             '-__v'
         );
-        res.status(200).json(result);
+        !user
+            ? res.status(200).json({ message: 'This user does not exist' })
+            : res.status(200).json(user);
     } catch (error) {
         console.log(error);
         res.status(500).send({ message: `Internal server error:  ${error}` });
     }
 };
 
-// Get a user using model in route 
+// Update a user using model in route
 const updateUser = async (req, res) => {
     try {
-        const result = await User.findByIdAndUpdate(
+        const user = await User.findByIdAndUpdate(
             { _id: req.params.userId },
-            { $set: req.body },
+            { $set: { username: req.body.username, email: req.body.email } },
             { runValidators: true, new: true }
-        )
-        res.status(200).json(result);
+        );
+        !user
+            ? res.status(200).json({ message: 'This user does not exist' })
+            : res.status(200).json(user);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({ message: `Internal server error:  ${error}` });
+    }
+};
+
+// Update a user using model in route
+// TODO - Delete any associated friends 
+const deleteUser = async (req, res) => {
+    try {
+        const user = await User.findOneAndRemove(
+            { _id: req.params.userId },
+            { $pull: { _id: req.params.userId } },
+            { new: true }
+        );
+        !user
+            ? res.status(200).json({ message: 'This user does not exist' })
+            : res.status(200).json(user);
     } catch (error) {
         console.log(error);
         res.status(500).send({ message: `Internal server error:  ${error}` });
@@ -94,4 +116,12 @@ const removeFriend = async (req, res) => {
 };
 
 // Export controllers
-module.exports = { getUsers, createUser, getUser, updateUser, addFriend, removeFriend };
+module.exports = {
+    getUsers,
+    createUser,
+    getUser,
+    updateUser,
+    deleteUser,
+    addFriend,
+    removeFriend
+};
