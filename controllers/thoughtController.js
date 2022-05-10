@@ -26,6 +26,7 @@ const createThought = async (req, res) => {
               })
             : res.json(result);
     } catch (error) {
+        console.log(error);
         res.status(500).send({ message: `Internal server error:  ${error}` });
     }
 };

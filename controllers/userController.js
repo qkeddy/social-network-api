@@ -11,16 +11,35 @@ const getUsers = async (req, res) => {
     }
 };
 
-// Create a user using model in route 
+// Create a user using model in route
 const createUser = async (req, res) => {
     try {
-        const result = await User.create(req.body)
+        const result = await User.create(req.body);
         res.status(200).json(result);
     } catch (error) {
         res.status(500).send({ message: `Internal server error:\n${error}` });
     }
 };
 
+// Create a user using model in route
+const addFriend = async (req, res) => {
+    try {
+        console.log(
+            `User: ${req.params.userId}   Friend: ${req.params.friendId}`
+        );
+        const user = await User.findOneAndUpdate(
+            { _id: req.params.userId },
+            { $addToSet: { friends: req.params.friendId } },
+            { runValidators: true, new: true }
+        );
+        !user
+            ? res.status(200).json({ message: 'This user does not exist' })
+            : res.status(200).json(user);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({ message: `Internal server error:  ${error}` });
+    }
+};
 
 // Export controllers
-module.exports = { getUsers, createUser };
+module.exports = { getUsers, createUser, addFriend };

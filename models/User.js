@@ -12,10 +12,12 @@ const userSchema = new Schema({
             ref: 'thought'
         }
     ],
-    friends: {
-        type: Schema.Types.ObjectId,
-        ref: 'user'
-    }
+    friends: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'user'
+        }
+    ]
 });
 
 // Initialize the `User` model
