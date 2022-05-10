@@ -45,5 +45,24 @@ const createThought = async (req, res) => {
     }
 };
 
+// Update a thought using model in route
+const updateThought = async (req, res) => {
+    try {
+        const result = await Thought.findByIdAndUpdate(
+            { _id: req.params.thoughtId },
+            { $set: { thoughtText: req.body.thoughtText } },
+            { runValidators: true, new: true }
+        );
+        !result
+            ? res.status(200).json({
+                message: 'No thought found with that ID'
+            })
+            : res.status(200).json(result);
+    } catch (error) {
+        res.status(500).send({ message: `Internal server error:  ${error}` });
+    }
+};
 
-module.exports = { getThoughts, getThought, createThought };
+
+
+module.exports = { getThoughts, getThought, createThought, updateThought };

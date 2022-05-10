@@ -2,7 +2,7 @@
 const router = require('express').Router();
 
 // Add destructured methods from thoughtController
-const { getThoughts, getThought, createThought } = require('../../controllers/thoughtController');
+const { getThoughts, getThought, createThought, updateThought } = require('../../controllers/thoughtController');
 
 // /api/thoughts
 router.route('/')
@@ -11,9 +11,8 @@ router.route('/')
 
 // /api/thoughts/:thoughtId
 router.route('/:thoughtId')
-    .get(getThought);
-
-// PUT
+    .get(getThought)
+    .put(updateThought);
 // DELETE
 
 // /api/thoughts/:thoughtId/reactions
