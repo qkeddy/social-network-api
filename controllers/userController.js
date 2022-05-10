@@ -68,6 +68,7 @@ const deleteUser = async (req, res) => {
         //     { $pull: { friends: req.params.userId } },
         //     { new: true }
         // );
+        
         !user
             ? res.status(200).json({ message: 'This user does not exist' })
             : res.status(200).json(user);
@@ -110,7 +111,7 @@ const removeFriend = async (req, res) => {
                 { runValidators: true, new: true }
             );
             !user
-                ? res.status(200).json({ message: 'This user does not exist' })
+                ? res.status(200).json({ message: 'This user or friend does not exist' })
                 : res.status(200).json(user);
         }
     } catch (error) {

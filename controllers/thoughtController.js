@@ -4,14 +4,28 @@ const { Thought, User } = require('../models');
 // Get all thoughts using model in route to find all documents that are instances of the `thoughts` model
 const getThoughts = async (req, res) => {
     try {
-        const result = await Thought.find({});
+        const result = await Thought.find({}).select('-__v');
         res.status(200).json(result);
     } catch (error) {
         res.status(500).send({ message: `Internal server error:  ${error}` });
     }
 };
 
-// Export controllers
+// Get a thought using model in route
+const getThought = async (req, res) => {
+    try {
+        const result = await Thought.findOne({ _id: req.params.thoughtId }).select('-__v');
+        !result
+            ? res.status(200).json({
+                message: 'No thought found with that ID'
+            })
+            : res.status(200).json(result);
+    } catch (error) {
+        res.status(500).send({ message: `Internal server error:  ${error}` });
+    }
+};
+
+// Create a thought using model in route
 const createThought = async (req, res) => {
     try {
         const result = await Thought.create(req.body);
@@ -30,4 +44,6 @@ const createThought = async (req, res) => {
         res.status(500).send({ message: `Internal server error:  ${error}` });
     }
 };
-module.exports = { getThoughts, createThought };
+
+
+module.exports = { getThoughts, getThought, createThought };
