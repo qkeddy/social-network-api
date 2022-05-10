@@ -36,6 +36,21 @@ const getUser = async (req, res) => {
     }
 };
 
+// Get a user using model in route 
+const updateUser = async (req, res) => {
+    try {
+        const result = await User.findByIdAndUpdate(
+            { _id: req.params.userId },
+            { $set: req.body },
+            { runValidators: true, new: true }
+        )
+        res.status(200).json(result);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({ message: `Internal server error:  ${error}` });
+    }
+};
+
 // Add a friend to a user using model in route
 const addFriend = async (req, res) => {
     try {
@@ -79,4 +94,4 @@ const removeFriend = async (req, res) => {
 };
 
 // Export controllers
-module.exports = { getUsers, createUser, getUser, addFriend, removeFriend };
+module.exports = { getUsers, createUser, getUser, updateUser, addFriend, removeFriend };
