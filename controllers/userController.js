@@ -55,15 +55,19 @@ const updateUser = async (req, res) => {
     }
 };
 
-// Update a user using model in route
-// TODO - Delete any associated friends 
+// Delete a user using model in route
+// TODO - Delete any associated friends
 const deleteUser = async (req, res) => {
     try {
         const user = await User.findOneAndRemove(
             { _id: req.params.userId },
-            { $pull: { _id: req.params.userId } },
             { new: true }
         );
+        // const friend = await User.findOneAndUpdate(
+        //     { friends: req.params.userId },
+        //     { $pull: { friends: req.params.userId } },
+        //     { new: true }
+        // );
         !user
             ? res.status(200).json({ message: 'This user does not exist' })
             : res.status(200).json(user);
