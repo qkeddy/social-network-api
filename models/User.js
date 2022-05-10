@@ -2,23 +2,33 @@
 const { Schema, model } = require('mongoose');
 
 // Schema to create `User` model
-const userSchema = new Schema({
-    username: { type: String, required: true, unique: true, trim: true },
-    //TODO - Add matching validation
-    email: { type: String, required: true, unique: true },
-    thoughts: [
-        {
-            type: Schema.Types.ObjectId,
-            ref: 'thought'
-        }
-    ],
-    friends: [
-        {
-            type: Schema.Types.ObjectId,
-            ref: 'user'
-        }
-    ]
-});
+const userSchema = new Schema(
+    {
+        username: { type: String, required: true, unique: true, trim: true },
+        //TODO - Add matching validation
+        email: { type: String, required: true, unique: true },
+        thoughts: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: 'thought'
+            }
+        ],
+        friends: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: 'user'
+            }
+        ]
+    },
+    {
+        toJSON: {
+            getters: true,
+            virtuals: true,
+        },
+        id: false,
+        versionKey: false
+    }
+);
 
 // Initialize the `User` model
 const User = model('user', userSchema);

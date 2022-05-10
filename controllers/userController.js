@@ -7,7 +7,8 @@ const getUsers = async (req, res) => {
         const result = await User.find({}).select('-__v');
         res.status(200).json(result);
     } catch (error) {
-        res.status(500).send({ message: `Internal server error:\n${error}` });
+        console.log(error);
+        res.status(500).send({ message: `Internal server error:  ${error}` });
     }
 };
 
@@ -17,7 +18,8 @@ const createUser = async (req, res) => {
         const result = await User.create(req.body);
         res.status(200).json(result);
     } catch (error) {
-        res.status(500).send({ message: `Internal server error:\n${error}` });
+        console.log(error);
+        res.status(500).send({ message: `Internal server error:  ${error}` });
     }
 };
 
@@ -41,20 +43,27 @@ const addFriend = async (req, res) => {
 // Add a friend to a user using model in route
 const removeFriend = async (req, res) => {
     try {
-        const user = await User.findOneAndUpdate(
-            { _id: req.params.userId },
-            { $pull: { friends: req.params.friendId } },
-            { runValidators: true, new: true }
-        );
-        !user
-            ? res.status(200).json({ message: 'This user does not exist' })
-            : res.status(200).json(user);
+        const preUserUpdate = await User.findOne({ _id: req.params.userId });
+        if (!preUserUpdate.friends.includes(req.params.friendId)) {
+            res.status(200).json({
+                message: 'This friend does not exist',
+                friendId: req.params.friendId
+            });
+        } else {
+            const user = await User.findOneAndUpdate(
+                { _id: req.params.userId },
+                { $pull: { friends: req.params.friendId } },
+                { runValidators: true, new: true }
+            );
+            !user
+                ? res.status(200).json({ message: 'This user does not exist' })
+                : res.status(200).json(user);
+        }
     } catch (error) {
         console.log(error);
         res.status(500).send({ message: `Internal server error:  ${error}` });
     }
 };
-
 
 // Export controllers
 module.exports = { getUsers, createUser, addFriend, removeFriend };
