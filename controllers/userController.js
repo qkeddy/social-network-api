@@ -23,6 +23,19 @@ const createUser = async (req, res) => {
     }
 };
 
+// Get a user using model in route 
+const getUser = async (req, res) => {
+    try {
+        const result = await User.findOne({ _id: req.params.userId }).select(
+            '-__v'
+        );
+        res.status(200).json(result);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({ message: `Internal server error:  ${error}` });
+    }
+};
+
 // Add a friend to a user using model in route
 const addFriend = async (req, res) => {
     try {
@@ -40,7 +53,7 @@ const addFriend = async (req, res) => {
     }
 };
 
-// Add a friend to a user using model in route
+// Remove a friend to a user using model in route
 const removeFriend = async (req, res) => {
     try {
         const preUserUpdate = await User.findOne({ _id: req.params.userId });
@@ -66,4 +79,4 @@ const removeFriend = async (req, res) => {
 };
 
 // Export controllers
-module.exports = { getUsers, createUser, addFriend, removeFriend };
+module.exports = { getUsers, createUser, getUser, addFriend, removeFriend };
