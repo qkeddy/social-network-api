@@ -11,5 +11,16 @@ const getUsers = async (req, res) => {
     }
 };
 
+// Create a user using model in route 
+const createUser = async (req, res) => {
+    try {
+        const result = await User.create(req.body)
+        res.status(200).json(result);
+    } catch (error) {
+        res.status(500).send({ message: `Internal server error:\n${error}` });
+    }
+};
+
+
 // Export controllers
-module.exports = { getUsers };
+module.exports = { getUsers, createUser };
