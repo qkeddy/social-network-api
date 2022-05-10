@@ -63,6 +63,31 @@ const updateThought = async (req, res) => {
     }
 };
 
+// Delete a thought using model in route
+const deletedThought = async (req, res) => {
+    try {
+        const result = await Thought.findByIdAndDelete(
+            { _id: req.params.thoughtId },
+            { new: true }
+        );
+        !result
+            ? res.status(200).json({
+                message: 'No thought found with that ID'
+            })
+            : res.status(200).json(`Thought with id ${req.params.thoughtId} has been deleted`);
+    } catch (error) {
+        res.status(500).send({ message: `Internal server error:  ${error}` });
+    }
+};
 
 
-module.exports = { getThoughts, getThought, createThought, updateThought };
+
+module.exports = {
+    getThoughts,
+    getThought,
+    createThought,
+    updateThought,
+    deletedThought
+};
+
+
