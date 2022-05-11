@@ -1,12 +1,22 @@
 // Plucking off `Schema` constructor and `model` method
 const { Schema, model } = require('mongoose');
 
+const validateEmail = (email) => {
+    const regex =
+        /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    return regex.test(email);
+};
+
 // Schema to create `User` model
 const userSchema = new Schema(
     {
         username: { type: String, required: true, unique: true, trim: true },
-        //TODO - Add matching validation
-        email: { type: String, required: true, unique: true },
+        email: {
+            type: String,
+            required: true,
+            unique: true,
+            validate: [validateEmail, 'Enter a valid email address']
+        },
         thoughts: [
             {
                 type: Schema.Types.ObjectId,
