@@ -104,11 +104,30 @@ const createReaction = async (req, res) => {
     }
 };
 
+// Create a reaction using model in route
+const deleteReaction = async (req, res) => {
+    try {
+        const result = await Thought.findByIdAndUpdate(
+            { _id: req.params.thoughtId },
+            { $pull: { reactions: { _id: req.params.reactionId } } },
+            { runValidators: true, new: true }
+        );
+        !result
+            ? res.status(200).json({
+                  message: 'No thought found with that ID'
+              })
+            : res.status(200).json(result);
+    } catch (error) {
+        res.status(500).send({ message: `Internal server error:  ${error}` });
+    }
+};
+
 module.exports = {
     getThoughts,
     getThought,
     createThought,
     updateThought,
     deletedThought,
-    createReaction
+    createReaction,
+    deleteReaction
 };
