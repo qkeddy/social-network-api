@@ -1,5 +1,5 @@
 // Plucking off `Schema` constructor and `model` method
-const { Schema, model } = require('mongoose');
+const { Schema, model, Types } = require('mongoose');
 
 // Plucking off `DateTime` from luxon
 const { DateTime } = require('luxon');
@@ -9,7 +9,6 @@ const reactionSchema = new Schema(
     {
         reactionId: {
             type: Schema.Types.ObjectId,
-            required: true,
             default: () => new Types.ObjectId()
         },
         reactionBody: {
@@ -31,8 +30,8 @@ const reactionSchema = new Schema(
         }
     },
     {
-        toJSON: { getters: true },
-        id: false
+        toJSON: { getters: true }
+        // id: false
     }
 );
 

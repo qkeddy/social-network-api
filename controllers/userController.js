@@ -1,5 +1,5 @@
 // Import references to the route models
-const { User } = require('../models');
+const { User, Thought } = require('../models');
 
 // Get all users using model in route to find all documents that are instances of the `user` model
 const getUsers = async (req, res) => {
@@ -56,20 +56,32 @@ const updateUser = async (req, res) => {
 };
 
 // Delete a user using model in route
-// TODO - Delete any associated friends
-// TODO - Delete associated thoughts
 const deleteUser = async (req, res) => {
     try {
         const user = await User.findOneAndRemove(
             { _id: req.params.userId },
             { new: true }
         );
+
+        // Remove userId references in other associated users
+        // TODO - Delete any associated friends (SKIP FOR NOW)
         // const friend = await User.findOneAndUpdate(
         //     { friends: req.params.userId },
         //     { $pull: { friends: req.params.userId } },
         //     { new: true }
         // );
-        
+
+        // Remove associated user thoughts
+        // TODO - Delete associated thoughts
+        // Loop over each user thought and findOneAndUpdate
+        // Is there a better way of doing this? 
+        // What is the native mongoose method to `unwind` sub documents? 
+        await Thought.findOneAndUpdate(
+            { friends: req.params.userId },
+            { $pull: { friends: req.params.userId } },
+            { new: true }
+        );
+
         !user
             ? res.status(200).json({ message: 'This user does not exist' })
             : res.status(200).json(user);

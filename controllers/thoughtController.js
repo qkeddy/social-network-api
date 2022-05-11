@@ -89,7 +89,7 @@ const deletedThought = async (req, res) => {
 // Create a reaction using model in route
 const createReaction = async (req, res) => {
     try {
-        const result = await Thought.findByIdAndUpdate(
+        const result = await Thought.findOneAndUpdate(
             { _id: req.params.thoughtId },
             { $addToSet: { reactions: req.body } },
             { runValidators: true, new: true }

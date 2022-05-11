@@ -5,7 +5,7 @@ const { Schema, model } = require('mongoose');
 const { DateTime } = require('luxon');
 
 // Reference the Reactions (Schema Only)
-const Reaction = require('./Reaction');
+const reactionSchema = require('./Reaction');
 
 // Schema to create `Thought` model
 const thoughtSchema = new Schema(
@@ -26,11 +26,11 @@ const thoughtSchema = new Schema(
             type: Schema.Types.String,
             required: true
         },
-        reactions: [Reaction]
+        reactions: [reactionSchema]
     },
     {
         toJSON: { getters: true, virtuals: true },
-        id: false
+        // id: false
     }
 );
 
