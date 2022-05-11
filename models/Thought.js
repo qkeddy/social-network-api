@@ -13,10 +13,13 @@ const thoughtSchema = new Schema({
         type: Date,
         default: Date.now
     },
+    // TODO - Format dates correctly
     username: String,
     // TODO - add reactions
     reactions: String
 });
+
+// TODO Create a virtual called reactionCount that retrieves the length of the thought's reactions array field on query.
 
 // Initialize the `Thought` model
 const Thought = model('thought', thoughtSchema);

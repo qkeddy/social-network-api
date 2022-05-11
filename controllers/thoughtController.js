@@ -80,8 +80,6 @@ const deletedThought = async (req, res) => {
     }
 };
 
-
-
 module.exports = {
     getThoughts,
     getThought,

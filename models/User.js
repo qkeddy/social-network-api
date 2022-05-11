@@ -20,12 +20,13 @@ const userSchema = new Schema(
             }
         ]
     },
+    // TODO Create a virtual called friendCount that retrieves the length of the user's friends array field on query.
     {
         toJSON: {
             getters: true,
-            virtuals: true,
+            virtuals: true
         },
-        id: false,
+        id: false
     }
 );
 
