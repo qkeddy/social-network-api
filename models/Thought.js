@@ -1,25 +1,34 @@
 // Plucking off `Schema` constructor and `model` method
 const { Schema, model } = require('mongoose');
 
-// Schema to create `Thought` model
-const thoughtSchema = new Schema({
-    thoughtText: {
-        type: String,
-        required: true,
-        minLength: 1,
-        maxLength: 280
-    },
-    createdAt: {
-        type: Date,
-        default: Date.now
-    },
-    // TODO - Format dates correctly
-    username: String,
-    // TODO - add reactions
-    reactions: String
-});
+// Plucking off `DateTime` from luxon
+const { DateTime } = require('luxon');
+const Reaction = require('./Reaction');
 
-// TODO Create a virtual called reactionCount that retrieves the length of the thought's reactions array field on query.
+// Schema to create `Thought` model
+const thoughtSchema = new Schema(
+    {
+        thoughtText: {
+            type: Schema.Types.String,
+            required: true,
+            minLength: 1,
+            maxLength: 280
+        },
+        createdAt: {
+            type: Schema.Types.Date,
+            default: Date.now,
+            get: (rawDate) => rawDate.toLocaleString(DateTime.DATETIME_HUGE_WITH_SECONDS)
+        },
+        username: {
+            type: Schema.Types.String,
+            required: true
+        },
+        reactions: [Reaction]
+    },
+    {
+        toJSON: { getters: true }
+    }
+);
 
 // Initialize the `Thought` model
 const Thought = model('thought', thoughtSchema);
