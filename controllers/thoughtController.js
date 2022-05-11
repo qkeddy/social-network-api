@@ -14,11 +14,13 @@ const getThoughts = async (req, res) => {
 // Get a thought using model in route
 const getThought = async (req, res) => {
     try {
-        const result = await Thought.findOne({ _id: req.params.thoughtId }).select('-__v');
+        const result = await Thought.findOne({
+            _id: req.params.thoughtId
+        }).select('-__v');
         !result
             ? res.status(200).json({
-                message: 'No thought found with that ID'
-            })
+                  message: 'No thought found with that ID'
+              })
             : res.status(200).json(result);
     } catch (error) {
         res.status(500).send({ message: `Internal server error:  ${error}` });
@@ -55,8 +57,8 @@ const updateThought = async (req, res) => {
         );
         !result
             ? res.status(200).json({
-                message: 'No thought found with that ID'
-            })
+                  message: 'No thought found with that ID'
+              })
             : res.status(200).json(result);
     } catch (error) {
         res.status(500).send({ message: `Internal server error:  ${error}` });
@@ -72,9 +74,31 @@ const deletedThought = async (req, res) => {
         );
         !result
             ? res.status(200).json({
-                message: 'No thought found with that ID'
-            })
-            : res.status(200).json(`Thought with id ${req.params.thoughtId} has been deleted`);
+                  message: 'No thought found with that ID'
+              })
+            : res
+                  .status(200)
+                  .json(
+                      `Thought with id ${req.params.thoughtId} has been deleted`
+                  );
+    } catch (error) {
+        res.status(500).send({ message: `Internal server error:  ${error}` });
+    }
+};
+
+// Create a reaction using model in route
+const createReaction = async (req, res) => {
+    try {
+        const result = await Thought.findByIdAndUpdate(
+            { _id: req.params.thoughtId },
+            { $addToSet: { reactions: req.body } },
+            { runValidators: true, new: true }
+        );
+        !result
+            ? res.status(200).json({
+                  message: 'No thought found with that ID'
+              })
+            : res.status(200).json(result);
     } catch (error) {
         res.status(500).send({ message: `Internal server error:  ${error}` });
     }
@@ -85,7 +109,6 @@ module.exports = {
     getThought,
     createThought,
     updateThought,
-    deletedThought
+    deletedThought,
+    createReaction
 };
-
-

@@ -19,7 +19,7 @@ const reactionSchema = new Schema(
         },
         username: [
             {
-                type: Schema.Types.ObjectId,
+                type: Schema.Types.String,
                 required: true
             }
         ],

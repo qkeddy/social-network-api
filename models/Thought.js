@@ -3,6 +3,8 @@ const { Schema, model } = require('mongoose');
 
 // Plucking off `DateTime` from luxon
 const { DateTime } = require('luxon');
+
+// Reference the Reactions (Schema Only)
 const Reaction = require('./Reaction');
 
 // Schema to create `Thought` model

@@ -57,6 +57,7 @@ const updateUser = async (req, res) => {
 
 // Delete a user using model in route
 // TODO - Delete any associated friends
+// TODO - Delete associated thoughts
 const deleteUser = async (req, res) => {
     try {
         const user = await User.findOneAndRemove(
