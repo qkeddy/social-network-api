@@ -12,12 +12,13 @@ const thoughtSchema = new Schema(
             type: Schema.Types.String,
             required: true,
             minLength: 1,
-            maxLength: 280
+            maxLength: [280, 'Please do not exceed 280 characters']
         },
         createdAt: {
             type: Schema.Types.Date,
             default: Date.now,
-            get: (rawDate) => rawDate.toLocaleString(DateTime.DATETIME_HUGE_WITH_SECONDS)
+            get: (rawDate) =>
+                rawDate.toLocaleString(DateTime.DATETIME_HUGE_WITH_SECONDS)
         },
         username: {
             type: Schema.Types.String,
@@ -26,9 +27,15 @@ const thoughtSchema = new Schema(
         reactions: [Reaction]
     },
     {
-        toJSON: { getters: true }
+        toJSON: { getters: true, virtuals: true },
+        id: false
     }
 );
+
+// Virtual to return a value for the number of reactions
+thoughtSchema.virtual('reactionCount').get(function () {
+    return this.reactions.length;
+})
 
 // Initialize the `Thought` model
 const Thought = model('thought', thoughtSchema);

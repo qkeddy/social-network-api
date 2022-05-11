@@ -8,10 +8,9 @@ const { DateTime } = require('luxon');
 const reactionSchema = new Schema(
     {
         reactionId: {
-            type: String
-            // type: Schema.Types.ObjectId,
-            // required: true,
-            // default: new Types.ObjectId()
+            type: Schema.Types.ObjectId,
+            required: true,
+            default: () => new Types.ObjectId()
         },
         reactionBody: {
             type: Schema.Types.String,
@@ -32,7 +31,8 @@ const reactionSchema = new Schema(
         }
     },
     {
-        toJSON: { getters: true }
+        toJSON: { getters: true },
+        id: false
     }
 );
 
