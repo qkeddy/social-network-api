@@ -26,9 +26,12 @@ const createUser = async (req, res) => {
 // Get a user using model in route
 const getUser = async (req, res) => {
     try {
-        const user = await User.findOne({ _id: req.params.userId }).select(
-            '-__v'
-        );
+        const user = await User.findOne({ _id: req.params.userId })
+            .select('-__v')
+            // Expand `thoughts` and `friends` from the user schema
+            .populate({ path: 'thoughts', select: '-__v' })
+            .populate({ path: 'friends', select: '-__v' });
+            ;
         !user
             ? res.status(200).json({ message: 'This user does not exist' })
             : res.status(200).json(user);
@@ -63,13 +66,7 @@ const deleteUser = async (req, res) => {
             { new: true }
         );
 
-        // Remove userId references in other associated users
         // TODO - Delete any associated friends (SKIP FOR NOW)
-        // const friend = await User.findOneAndUpdate(
-        //     { friends: req.params.userId },
-        //     { $pull: { friends: req.params.userId } },
-        //     { new: true }
-        // );
 
         // Remove associated user thoughts
         // TODO - Delete associated thoughts
@@ -84,11 +81,9 @@ const deleteUser = async (req, res) => {
 
         !user
             ? res.status(200).json({ message: 'This user does not exist' })
-            : res
-                  .status(200)
-                  .json({
-                      message: `User with id ${req.params.userId} has been deleted`
-                  });
+            : res.status(200).json({
+                  message: `User with id ${req.params.userId} has been deleted`
+              });
     } catch (error) {
         console.log(error);
         res.status(500).send({ message: `Internal server error:  ${error}` });
