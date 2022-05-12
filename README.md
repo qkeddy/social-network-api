@@ -11,7 +11,7 @@
 ## Description
 An API for a social network web application where users can share their thoughts, react to friends’ thoughts, and create a friend list. The API leverages Express.js for routing, a MongoDB database, and the Mongoose ODM.
 
-A demo of this application can be viewed [here](https://drive.google.com/file/d/1iKPGEZBSAZsAVkSmambfkUsfHnoWCwen/view?usp=sharing).
+A demo of this application can be viewed [here](https://drive.google.com/drive/folders/1qEDmrWyOKqeXQbyYtfCJ0R_ZQUn5B0PD?usp=sharing).
 
 A link to the GitHub repository can be viewed [here](https://github.com/qkeddy/social-network-api).
 
