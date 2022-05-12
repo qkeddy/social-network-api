@@ -69,19 +69,12 @@ const deleteUser = async (req, res) => {
         // TODO - Delete any associated friends (SKIP FOR NOW)
 
         // Remove associated user thoughts
-        // TODO - Delete associated thoughts
-        // await Thought.findOneAndUpdate(
-        //     { friends: req.params.userId },
-        //     { $pull: { friends: req.params.userId } },
-        //     { new: true }
-        // );
-
-        Thought.deleteMany({ _id: { $in: user.thoughts } });
+        const thoughts = await Thought.deleteMany({ _id: { $in: user.thoughts } });
 
         !user
             ? res.status(200).json({ message: 'This user does not exist' })
             : res.status(200).json({
-                  message: `User with id ${req.params.userId} has been deleted`
+                  message: `User with id ${req.params.userId} has been deleted along with ${thoughts.deletedCount} thoughts.`
               });
     } catch (error) {
         console.log(error);
