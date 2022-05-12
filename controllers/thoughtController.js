@@ -76,11 +76,9 @@ const deletedThought = async (req, res) => {
             ? res.status(200).json({
                   message: 'No thought found with that ID'
               })
-            : res
-                  .status(200)
-                  .json(
-                      `Thought with id ${req.params.thoughtId} has been deleted`
-                  );
+            : res.status(200).json({
+                  message: `Thought with id ${req.params.thoughtId} has been deleted`
+              });
     } catch (error) {
         res.status(500).send({ message: `Internal server error:  ${error}` });
     }
@@ -116,7 +114,11 @@ const deleteReaction = async (req, res) => {
             ? res.status(200).json({
                   message: 'No thought found with that ID'
               })
-            : res.status(200).json(result);
+            : res
+                  .status(200)
+                  .json({
+                      message: `Reaction with id ${req.params.reactionId} associated to the thought id ${req.params.thoughtId} has been deleted`
+                  });
     } catch (error) {
         res.status(500).send({ message: `Internal server error:  ${error}` });
     }

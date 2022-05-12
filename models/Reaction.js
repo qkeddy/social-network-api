@@ -16,12 +16,10 @@ const reactionSchema = new Schema(
             required: true,
             maxlength: [280, 'Please do not exceed 280 characters']
         },
-        username: [
-            {
-                type: Schema.Types.String,
-                required: true
-            }
-        ],
+        username: {
+            type: Schema.Types.String,
+            required: true
+        },
         createdAt: {
             type: Schema.Types.Date,
             default: Date.now,
@@ -30,9 +28,9 @@ const reactionSchema = new Schema(
         }
     },
     {
-        toJSON: { getters: true }
-        // id: false
+        toJSON: { getters: true },
+        id: false
     }
 );
 
-model.exports = reactionSchema;
+module.exports = reactionSchema;
