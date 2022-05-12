@@ -70,14 +70,13 @@ const deleteUser = async (req, res) => {
 
         // Remove associated user thoughts
         // TODO - Delete associated thoughts
-        // Loop over each user thought and findOneAndUpdate
-        // Is there a better way of doing this?
-        // What is the native mongoose method to `unwind` sub documents?
-        await Thought.findOneAndUpdate(
-            { friends: req.params.userId },
-            { $pull: { friends: req.params.userId } },
-            { new: true }
-        );
+        // await Thought.findOneAndUpdate(
+        //     { friends: req.params.userId },
+        //     { $pull: { friends: req.params.userId } },
+        //     { new: true }
+        // );
+
+        Thought.deleteMany({ _id: { $in: user.thoughts } });
 
         !user
             ? res.status(200).json({ message: 'This user does not exist' })
