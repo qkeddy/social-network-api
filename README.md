@@ -11,7 +11,7 @@
 ## Description
 An API for a social network web application where users can share their thoughts, react to friends’ thoughts, and create a friend list. The API leverages Express.js for routing, a MongoDB database, and the Mongoose ODM.
 
-A demo of this application can be viewed [here](https://drive.google.com/drive/folders/1qEDmrWyOKqeXQbyYtfCJ0R_ZQUn5B0PD?usp=sharing).
+A demo of this application can be viewed [here](https://drive.google.com/file/d/1YZzEYr4MSSJRQVAPzffUspxJKzwivIOL/view?usp=sharing).
 
 A link to the GitHub repository can be viewed [here](https://github.com/qkeddy/social-network-api).
 
@@ -33,7 +33,8 @@ A link to the GitHub repository can be viewed [here](https://github.com/qkeddy/s
 
 ## Features
 - API endpoints to support full CRUD operations against a simple Mongo database.
-- Upon start, the Mongoose database will be automatically seeded with two sample users.
+- Upon start, the predefined Mongoose models are synced to the MongoDB database.
+- The Mongoose database will be automatically seeded with two sample users.
 
 ## Usage
 
@@ -50,8 +51,8 @@ A link to the GitHub repository can be viewed [here](https://github.com/qkeddy/s
 - **PUT** - Update a user: `http://localhost:3001/api/users/:userId`
 ```
 {
-  "username": "lernantino",
-  "email": "lernantino@me.com"
+  "username": "jim",
+  "email": "jim@gmail.com"
 }
 ```
 - **DELETE** - Delete a user: `http://localhost:3001/api/users/:userId` 
