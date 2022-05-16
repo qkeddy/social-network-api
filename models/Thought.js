@@ -19,6 +19,7 @@ const thoughtSchema = new Schema(
         createdAt: {
             type: Schema.Types.Date,
             default: Date.now,
+            // Getter method to change the value of `default` based upon the dateTime conversion
             get: (rawDate) =>
                 rawDate.toLocaleString(DateTime.DATETIME_HUGE_WITH_SECONDS)
         },
