@@ -1,7 +1,5 @@
 # Social Network API
 
-
-# E-Commerce Back End
 ![badmath](https://img.shields.io/github/license/qkeddy/social-network-api)
 ![badmath](https://img.shields.io/github/issues/qkeddy/social-network-api)
 ![badmath](https://img.shields.io/github/languages/top/qkeddy/social-network-api)
